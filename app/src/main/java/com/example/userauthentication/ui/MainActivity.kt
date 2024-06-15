@@ -1,15 +1,14 @@
-package com.example.userauthentication
+package com.example.userauthentication.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.userauthentication.R
 import com.example.userauthentication.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     lateinit var mainBinding: ActivityMainBinding
@@ -24,8 +23,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
 
         mainBinding.registerbutton.setOnClickListener {
-            var intent = Intent(this@MainActivity,RegistrationActivity::class.java
+            var intent = Intent(this@MainActivity, RegistrationActivity::class.java
             )
+            startActivity(intent)
+        }
+
+        mainBinding.loginbutton.setOnClickListener {
+            var intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)
         }
 

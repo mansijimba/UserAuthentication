@@ -1,4 +1,4 @@
-package com.example.userauthentication
+package com.example.userauthentication.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.userauthentication.R
 import com.example.userauthentication.Utils.imageUtils
 import com.example.userauthentication.databinding.ActivityRegistrationBinding
 import com.squareup.picasso.Picasso
@@ -36,17 +37,17 @@ class RegistrationActivity : AppCompatActivity() {
             }
         }
 
-        registrationBinding.imagebrowse.setOnClickListener{
-            imageUtils.launchGallery(this)
-        }
-        registrationBinding.save.setOnClickListener {
-            if (imageUri != null){
-                uploadImage()
-            }else{
-                Toast.makeText(applicationContext,"Please upload image first",Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
+//        registrationBinding.imagebrowse.setOnClickListener{
+//            imageUtils.launchGallery(this)
+//        }
+//        registrationBinding.save.setOnClickListener {
+//            if (imageUri != null){
+//                uploadImage()
+//            }else{
+//                Toast.makeText(applicationContext,"Please upload image first",Toast.LENGTH_LONG)
+//                    .show()
+//            }
+//        }
 
         registrationBinding.buttonregister2.setOnClickListener {
              var name : String = registrationBinding.editname.text.toString()
