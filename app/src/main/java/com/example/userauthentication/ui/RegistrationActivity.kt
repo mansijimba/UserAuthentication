@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.userauthentication.R
-import com.example.userauthentication.Utils.imageUtils
+import com.example.userauthentication.Utils.ImageUtils
 import com.example.userauthentication.databinding.ActivityRegistrationBinding
 import com.squareup.picasso.Picasso
 
@@ -20,7 +20,7 @@ class RegistrationActivity : AppCompatActivity() {
     lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     var imageUri : Uri? = null
 
-    lateinit var imageUtils: imageUtils
+    lateinit var imageUtils: ImageUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class RegistrationActivity : AppCompatActivity() {
         registrationBinding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(registrationBinding.root)
 
-        imageUtils = imageUtils(this)
+        imageUtils = ImageUtils(this)
         imageUtils.registerActivity { url ->
             url.let {
                 imageUri = url

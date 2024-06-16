@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
-class imageUtils (var activity: AppCompatActivity) {
+class ImageUtils (var activity: AppCompatActivity) {
     lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
 
     fun registerActivity(callback:(Uri?)->Unit){

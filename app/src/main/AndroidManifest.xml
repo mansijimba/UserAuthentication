@@ -13,7 +13,7 @@
         android:theme="@style/Theme.UserAuthentication"
         tools:targetApi="31">
         <activity
-            android:name=".ui.UpdateUser"
+            android:name=".ui.UpdateUserActivity"
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"

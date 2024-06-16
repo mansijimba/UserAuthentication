@@ -12,6 +12,12 @@ data class UserModel(
     var imageName: String = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        parcel.readInt()?:0,
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        parcel.readString()?:"",
 
     )
 
