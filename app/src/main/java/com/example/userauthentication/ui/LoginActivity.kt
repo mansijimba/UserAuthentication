@@ -1,12 +1,16 @@
 package com.example.userauthentication.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.userauthentication.Adapter.UserAdapter
 import com.example.userauthentication.Model.UserModel
 import com.example.userauthentication.R
@@ -30,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         val repo = UserRepositoryImpl()
         userViewModel = UserViewModel(repo)
-        userViewModel.fetchProduct()
+        userViewModel.fetchUser()
 
         userAdapter = UserAdapter(this@LoginActivity, ArrayList())
         loginBinding.recyclerView.apply {
@@ -49,7 +53,35 @@ class LoginActivity : AppCompatActivity() {
                 userAdapter.updateData(it)
             }
         }
+        ItemTouchHelper(object:ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                TODO("Not yet implemented")
+            }
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                var id = userAdapter.getUserId(viewHolder.adapterPosition)
+                var imageName = userAdapter.getImageName(viewHolder.adapterPosition)
 
+                userViewModel.deleteData(id){
+                        success,message ->
+                    if(success){
+                        Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
+                        userViewModel.deleteImage(imageName){
+                                success,message ->
+                        }
+                    }else{
+                        Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }).attachToRecyclerView(loginBinding.recyclerView)
+        loginBinding.floatingActionButton.setOnClickListener {
+            var intent = Intent(this@LoginActivity, UpdateUserActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

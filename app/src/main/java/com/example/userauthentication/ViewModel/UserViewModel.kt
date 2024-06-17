@@ -15,11 +15,11 @@ class UserViewModel(val repository: UserRepository):ViewModel(){
     }
 
 
-    fun updateProduct(id:String,data: MutableMap<String,Any>?,callback:(Boolean,String?) -> Unit){
+    fun updateUser(id:String,data: MutableMap<String,Any>?,callback:(Boolean,String?) -> Unit){
         repository.UpdateUser(id,data,callback)
     }
 
-    fun addProduct(userModel: UserModel, callback: (Boolean, String?) -> Unit) {
+    fun addUser(userModel: UserModel, callback: (Boolean, String?) -> Unit) {
         repository.addUser(userModel, callback)
     }
 
@@ -37,12 +37,12 @@ class UserViewModel(val repository: UserRepository):ViewModel(){
     var loadingState = MutableLiveData<Boolean>()
         get() = _loadingState
 
-    fun fetchProduct() {
+    fun fetchUser() {
         _loadingState.value = true
-        repository.getAllUser() { productList, success, message ->
-            if (productList != null) {
+        repository.getAllUser() { userList, success, message ->
+            if (userList != null) {
                 _loadingState.value= false
-                _userList.value = productList
+                _userList.value = userList
             }
         }
     }

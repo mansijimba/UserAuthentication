@@ -4,17 +4,19 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.userauthentication.Model.UserModel
 import com.example.userauthentication.R
 import com.example.userauthentication.Repository.UserRepositoryImpl
 import com.example.userauthentication.Utils.ImageUtils
 import com.example.userauthentication.ViewModel.UserViewModel
 import com.example.userauthentication.databinding.ActivityUpdateUserBinding
-import com.example.userauthentication.databinding.EditUserActivityBinding
+import com.example.userauthentication.databinding.EditUserBinding
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 
@@ -31,8 +33,7 @@ class UpdateUserActivity : AppCompatActivity() {
 
     lateinit var  userViewModel: UserViewModel
 
-
-    lateinit var editUserActivityBinding: EditUserActivityBinding
+    lateinit var editBinding: EditUserBinding
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -65,11 +66,57 @@ class UpdateUserActivity : AppCompatActivity() {
             imageUri = it
             Picasso.get().load(it).into(updateUserBinding.imageupdate)
         }
+        var user:UserModel?= intent.getParcelableExtra("user")
+        id = user?.id.toString()
+        imageName = user?.imageName.toString()
+        updateUserBinding.updateemail.setText(user?.email)
+        updateUserBinding.updateNumber.setText(user?.number.toString())
+        updateUserBinding.updatePassword.setText(user?.password)
+        Picasso.get().load(user?.url).into(updateUserBinding.imageupdate)
+
+        updateUserBinding.buttonupdate.setOnClickListener {
+            uploadImage()
+        }
+        updateUserBinding.imageupdate.setOnClickListener {
+            imageUtils.launchGallery(this@UpdateUserActivity)
+
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+    fun updateUser(url:String){
+        var updatedemail : String = updateUserBinding.updateemail.text.toString()
+        var updatednumber : Int = updateUserBinding.updateNumber.text.toString().toInt()
+        var updatedpassword : String = updateUserBinding.updatePassword.text.toString()
+
+        var data = mutableMapOf<String,Any>()
+        data["email"]= updatedemail
+        data["number"]= updatednumber
+        data["password"]= updatedpassword
+        data["url"]= url
+
+        userViewModel.updateUser(id,data){
+                success,message ->
+            if (success){
+                Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    fun uploadImage() {
+        imageUri?.let {
+            userViewModel.uploadImage(imageName, it){
+                    success, imageUrl ->
+                if (success){
+                    updateUser(imageUrl.toString())
+                }
+            }
+        }
+
     }
 }
