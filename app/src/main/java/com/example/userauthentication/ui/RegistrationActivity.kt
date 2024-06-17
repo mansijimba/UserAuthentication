@@ -96,6 +96,7 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     fun uploadImage() {
+        loadingUtils.showLoading()
 
         val imageName = UUID.randomUUID().toString()
         imageUri?.let {
