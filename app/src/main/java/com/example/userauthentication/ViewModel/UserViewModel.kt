@@ -24,9 +24,7 @@ class UserViewModel(val repository: UserRepository):ViewModel(){
     }
 
     fun uploadImage(imageName: String, imageUrl: Uri, callback: (Boolean, String?) -> Unit) {
-        repository.uploadImage(imageName, imageUrl){success,imageUrl ->
-            callback(success, imageUrl)
-        }
+        repository.uploadImage(imageName, imageUrl,callback)
     }
 
     private var _userList = MutableLiveData<List<UserModel>?>()

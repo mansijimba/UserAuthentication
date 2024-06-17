@@ -1,6 +1,7 @@
 package com.example.userauthentication.Repository
 
 import android.net.Uri
+import android.util.Log
 import com.example.userauthentication.Model.UserModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,7 +25,8 @@ class UserRepositoryImpl : UserRepository{
         imageUrl?.let {url->
             imageRefernce.putFile(url).addOnSuccessListener{
                 imageRefernce.downloadUrl.addOnSuccessListener {downloadUrl->
-                    var imageUrl = downloadUrl.toString()
+                    val imageUrl = downloadUrl.toString()
+
                     callback(true,imageUrl)
                 }
 
