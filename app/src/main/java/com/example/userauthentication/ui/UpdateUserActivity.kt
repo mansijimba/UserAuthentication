@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 
 class UpdateUserActivity : AppCompatActivity() {
+
     var firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     var ref = firebaseDatabase.reference.child("user")
 

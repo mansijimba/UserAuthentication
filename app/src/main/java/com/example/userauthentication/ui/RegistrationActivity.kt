@@ -15,6 +15,7 @@ import com.example.userauthentication.Model.UserModel
 import com.example.userauthentication.R
 import com.example.userauthentication.Repository.UserRepositoryImpl
 import com.example.userauthentication.Utils.ImageUtils
+import com.example.userauthentication.Utils.LoadingUtils
 import com.example.userauthentication.ViewModel.UserViewModel
 import com.example.userauthentication.databinding.ActivityRegistrationBinding
 import com.example.userauthentication.databinding.ActivityUpdateUserBinding
@@ -23,6 +24,8 @@ import com.squareup.picasso.Picasso
 import java.util.UUID
 
 class RegistrationActivity : AppCompatActivity() {
+    lateinit var loadingUtils: LoadingUtils
+
     lateinit var registrationBinding: ActivityRegistrationBinding
 
     var firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -55,6 +58,8 @@ class RegistrationActivity : AppCompatActivity() {
 
         registrationBinding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(registrationBinding.root)
+
+        loadingUtils = LoadingUtils(this)
 
         val repo = UserRepositoryImpl()
         userViewmodel = UserViewModel(repo)
@@ -91,6 +96,7 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     fun uploadImage() {
+
         val imageName = UUID.randomUUID().toString()
         imageUri?.let {
             userViewmodel.uploadImage(imageName, it) { success, imageUrl ->
@@ -113,6 +119,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         userViewmodel.addUser(data) { success, message ->
             if (success) {
+               loadingUtils.dismiss()
                 Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
